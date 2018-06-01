@@ -58,12 +58,29 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     }
     
     func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        let startTime = NSDate()
         let request = VNCoreMLRequest(model: model!, completionHandler: { request, error in
             guard let results = request.results as? [VNClassificationObservation] else {return}
             guard let observation = results.first else {return}
             
             DispatchQueue.main.async {
                 self.predictionLabel.text = "Prediction: \(observation.identifier) \n Confidence: \(observation.confidence * 100) %"
+                do {
+                    // get the documents folder url
+                    if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                        // create the destination url for the text file to be saved
+                        let fileURL = documentDirectory.appendingPathComponent("measures.txt")
+                        // define the string/text to be saved
+                        let elapsedTime = abs(startTime.timeIntervalSinceNow)
+                        var text = String(elapsedTime)
+                        text.append("\n")
+                        // writing to disk
+                        try text.write(to: fileURL, atomically: false, encoding: .utf8)
+                        print("saving was successful. measured time: \(elapsedTime)")
+                    }
+                } catch {
+                    print("error:", error)
+                }
             }
         })
         guard let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
