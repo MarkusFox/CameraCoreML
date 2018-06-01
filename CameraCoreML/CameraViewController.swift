@@ -26,6 +26,23 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+            // create the destination url for the text file to be saved
+            let fileURL1 = documentDirectory.appendingPathComponent("Resnet50.txt")
+            do {
+                try Data("Starting measurements\n".utf8).write(to: fileURL1)
+            } catch {
+                print(error)
+            }
+//            let fileURL2 = documentDirectory.appendingPathComponent("VGG16.txt")
+//            do {
+//                try Data("Starting measurements\n".utf8).write(to: fileURL2)
+//            } catch {
+//                print(error)
+//            }
+            
+            print("created measuring files")
+        }
         setupCamera()
     }
     
@@ -65,22 +82,30 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             
             DispatchQueue.main.async {
                 self.predictionLabel.text = "Prediction: \(observation.identifier) \n Confidence: \(observation.confidence * 100) %"
+            }
+            // Write to document
+            // get the documents folder url
+            if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+                // create the destination url for the text file to be saved
+                let fileURL = documentDirectory.appendingPathComponent("Resnet50.txt")
+                // define the string/text to be saved
+                let elapsedTime = abs(startTime.timeIntervalSinceNow)
+                var text = String(elapsedTime)
+                text.append("\n")
+                // writing to disk
                 do {
-                    // get the documents folder url
-                    if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
-                        // create the destination url for the text file to be saved
-                        let fileURL = documentDirectory.appendingPathComponent("measures.txt")
-                        // define the string/text to be saved
-                        let elapsedTime = abs(startTime.timeIntervalSinceNow)
-                        var text = String(elapsedTime)
-                        text.append("\n")
-                        // writing to disk
-                        try text.write(to: fileURL, atomically: false, encoding: .utf8)
-                        print("saving was successful. measured time: \(elapsedTime)")
-                    }
+                    let fileHandle = try FileHandle(forWritingTo: fileURL)
+                    fileHandle.seekToEndOfFile()
+                    // convert your string to data or load it from another resource
+                    let textData = Data(text.utf8)
+                    // append your text to your text file
+                    fileHandle.write(textData)
+                    // close it when done
+                    fileHandle.closeFile()
                 } catch {
-                    print("error:", error)
+                    print(error)
                 }
+                print("saving was successful. measured time: \(elapsedTime)")
             }
         })
         guard let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
