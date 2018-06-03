@@ -22,24 +22,30 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     //VGG16 is a very big model that captures many categories, but in this example performance is very poor
     // because every check takes quite some time.
     //For purpose of showing, Resnet50 works very good.
-    let model = try? VNCoreMLModel(for: Resnet50().model)
+    let model = try? VNCoreMLModel(for: Inceptionv3().model)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             // create the destination url for the text file to be saved
-            let fileURL1 = documentDirectory.appendingPathComponent("Resnet50.txt")
-            do {
-                try Data("Starting measurements\n".utf8).write(to: fileURL1)
-            } catch {
-                print(error)
-            }
+//            let fileURL1 = documentDirectory.appendingPathComponent("Resnet50.txt")
+//            do {
+//                try Data("Starting measurements\n".utf8).write(to: fileURL1)
+//            } catch {
+//                print(error)
+//            }
 //            let fileURL2 = documentDirectory.appendingPathComponent("VGG16.txt")
 //            do {
 //                try Data("Starting measurements\n".utf8).write(to: fileURL2)
 //            } catch {
 //                print(error)
 //            }
+            let fileURL3 = documentDirectory.appendingPathComponent("Inceptionv3.txt")
+            do {
+                try Data("Starting measurements\n".utf8).write(to: fileURL3)
+            } catch {
+                print(error)
+            }
             
             print("created measuring files")
         }
@@ -87,7 +93,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             // get the documents folder url
             if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
                 // create the destination url for the text file to be saved
-                let fileURL = documentDirectory.appendingPathComponent("Resnet50.txt")
+                let fileURL = documentDirectory.appendingPathComponent("Inceptionv3.txt")
                 // define the string/text to be saved
                 let elapsedTime = abs(startTime.timeIntervalSinceNow)
                 var text = String(elapsedTime)
@@ -105,7 +111,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
                 } catch {
                     print(error)
                 }
-                print("saving was successful. measured time: \(elapsedTime)")
+                print("write to file was successful. measured time: \(elapsedTime)")
             }
         })
         guard let pixelBuffer: CVPixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
