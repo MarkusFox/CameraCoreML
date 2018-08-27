@@ -19,9 +19,8 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     var cameraOutput: AVCaptureVideoDataOutput!
     var previewLayer: AVCaptureVideoPreviewLayer!
     
-    //VGG16 is a very big model that captures many categories, but in this example performance is very poor
-    // because every check takes quite some time.
-    //For purpose of showing, Resnet50 works very good.
+    // After adding your preferred model to the project directory,
+    // simply edit this line to YourModelName().model
     let model = try? VNCoreMLModel(for: Resnet50().model)
     
     override func viewDidLoad() {

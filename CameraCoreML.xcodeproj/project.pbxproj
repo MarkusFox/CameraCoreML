@@ -13,7 +13,6 @@
 		289414B020C152530027D0D0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 289414AE20C152530027D0D0 /* LaunchScreen.storyboard */; };
 		289414B820C152740027D0D0 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 289414B720C152740027D0D0 /* CameraViewController.swift */; };
 		289414BA20C152FA0027D0D0 /* Resnet50.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 289414B920C152FA0027D0D0 /* Resnet50.mlmodel */; };
-		289414BC20C153200027D0D0 /* VGG16.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 289414BB20C1531F0027D0D0 /* VGG16.mlmodel */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +24,6 @@
 		289414B120C152530027D0D0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		289414B720C152740027D0D0 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		289414B920C152FA0027D0D0 /* Resnet50.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Resnet50.mlmodel; sourceTree = "<group>"; };
-		289414BB20C1531F0027D0D0 /* VGG16.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = VGG16.mlmodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,7 +58,6 @@
 			children = (
 				289414A520C152510027D0D0 /* AppDelegate.swift */,
 				289414B920C152FA0027D0D0 /* Resnet50.mlmodel */,
-				289414BB20C1531F0027D0D0 /* VGG16.mlmodel */,
 				289414A920C152510027D0D0 /* Main.storyboard */,
 				289414AC20C152530027D0D0 /* Assets.xcassets */,
 				289414AE20C152530027D0D0 /* LaunchScreen.storyboard */,
@@ -141,7 +138,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				289414BC20C153200027D0D0 /* VGG16.mlmodel in Sources */,
 				289414A620C152510027D0D0 /* AppDelegate.swift in Sources */,
 				289414BA20C152FA0027D0D0 /* Resnet50.mlmodel in Sources */,
 				289414B820C152740027D0D0 /* CameraViewController.swift in Sources */,
