@@ -19,30 +19,18 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     var cameraOutput: AVCaptureVideoDataOutput!
     var previewLayer: AVCaptureVideoPreviewLayer!
     
-    //VGG16 is a very big model that captures many categories, but in this example performance is very poor
-    // because every check takes quite some time.
-    //For purpose of showing, Resnet50 works very good.
+    // After adding your preferred model to the project directory,
+    // simply edit this line to YourModelName().model
     let model = try? VNCoreMLModel(for: Inceptionv3().model)
+    let documentName = "Inceptionv3.txt"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
             // create the destination url for the text file to be saved
-//            let fileURL1 = documentDirectory.appendingPathComponent("Resnet50.txt")
-//            do {
-//                try Data("Starting measurements\n".utf8).write(to: fileURL1)
-//            } catch {
-//                print(error)
-//            }
-//            let fileURL2 = documentDirectory.appendingPathComponent("VGG16.txt")
-//            do {
-//                try Data("Starting measurements\n".utf8).write(to: fileURL2)
-//            } catch {
-//                print(error)
-//            }
-            let fileURL3 = documentDirectory.appendingPathComponent("Inceptionv3.txt")
+            let fileURL = documentDirectory.appendingPathComponent(documentName)
             do {
-                try Data("Starting measurements\n".utf8).write(to: fileURL3)
+                try Data("Starting measurements\n".utf8).write(to: fileURL)
             } catch {
                 print(error)
             }
@@ -93,7 +81,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
             // get the documents folder url
             if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
                 // create the destination url for the text file to be saved
-                let fileURL = documentDirectory.appendingPathComponent("Inceptionv3.txt")
+                let fileURL = documentDirectory.appendingPathComponent(documentName)
                 // define the string/text to be saved
                 let elapsedTime = abs(startTime.timeIntervalSinceNow)
                 var text = String(elapsedTime)
